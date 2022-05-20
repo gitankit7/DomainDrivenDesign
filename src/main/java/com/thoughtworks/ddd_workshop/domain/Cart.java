@@ -7,16 +7,23 @@ import static java.util.List.copyOf;
 
 public class Cart {
 
-    private List<CartItemWithQuantity> items;
+  private List<Item> items;
 
-    public void addItem(CartItemWithQuantity item) {
-        if(items == null) {
-            items = new ArrayList<>();
-        }
-        items.add(item);
+  public void addItem(Item item) {
+    if (items == null) {
+      items = new ArrayList<>();
     }
+    items.add(item);
+  }
 
-    public List<CartItemWithQuantity> getItems() {
-        return copyOf(items);
-    }
+  public List<Item> getItems() {
+    return copyOf(items);
+  }
+
+  public void remove(Product p) {
+    items.stream()
+        .filter(item -> item.getProduct().equals(p))
+        .findFirst()
+        .ifPresent(item -> items.remove(item));
+  }
 }

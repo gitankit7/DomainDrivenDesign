@@ -2,13 +2,19 @@ package com.thoughtworks.ddd_workshop.domain;
 
 public class Item {
 
-  private final String name;
+  private Product product;
+  private int quantity;
 
-  public Item(String name) {
-    this.name = name;
+  public Item(Product product, int quantity) {
+    this.product = product;
+    this.quantity = quantity;
   }
 
-  public String getName() {
-    return name;
+  public Product getProduct() {
+    return product;
+  }
+
+  public int getQuantity() {
+    return quantity;
   }
 }
