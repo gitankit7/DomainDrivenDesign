@@ -1,8 +1,8 @@
 package cart;
 
 import com.thoughtworks.ddd_workshop.domain.Cart;
-import com.thoughtworks.ddd_workshop.domain.Product;
 import com.thoughtworks.ddd_workshop.domain.Item;
+import com.thoughtworks.ddd_workshop.domain.Product;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,5 +27,16 @@ public class CartTest {
     cart.remove(new Product("Apple Pencil"));
 
     assertTrue(cart.getItems().size() == 1);
+  }
+
+  @Test
+  public void removeItemRemovesItemFromCart_addsItToRemovedList() {
+    Cart cart = new Cart();
+    cart.addItem(new Item(new Product("Apple Pencil"), 2));
+    cart.addItem(new Item(new Product("Apple Pencil2"), 3));
+
+    cart.remove(new Product("Apple Pencil"));
+
+    assertTrue(cart.getRemovedItems().size() == 1);
   }
 }
