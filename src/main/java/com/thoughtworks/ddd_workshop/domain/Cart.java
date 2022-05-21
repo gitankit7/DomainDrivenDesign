@@ -8,12 +8,17 @@ public class Cart {
 
     private List<Item> items;
     private List<String> removedItemsName;
+    private boolean isCheckedOut;
 
     public void addItem(Item item) {
         if (items == null) {
             items = new ArrayList<>();
         }
         items.add(item);
+    }
+
+    public void setCheckedOut(boolean checkedOut) {
+        isCheckedOut = checkedOut;
     }
 
     public List<Item> getItems() {
@@ -33,9 +38,18 @@ public class Cart {
         });
     }
 
-    public static Price discountedPrice(String productName) {
-        return PriceMap.priceMap.getOrDefault(productName, new Price(Currency.getInstance("USD"), 10));
+    public Order checkout() {
+        List<Product> productsList = new ArrayList<>();
+        setCheckedOut(true);
+        items.forEach(item -> {
+            for (int i = 1; i <= item.getQuantity(); i++) {
+                productsList.add(item.getProduct());
+            }
+        });
+
+        return new Order(productsList);
     }
+
 
     public List<String> getRemovedItems() {
         return copyOf(removedItemsName);
