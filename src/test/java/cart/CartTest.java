@@ -15,7 +15,7 @@ public class CartTest {
   public void noItemInTheCart_ItemGetsAddedToCartWhenAddToCartIsCalled() {
     Cart cart = new Cart();
     cart.addItem(
-        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)), 2));
+        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d), 2));
 
     assertTrue(cart.getItems().size() == 1);
     assertTrue(cart.getItems().get(0).getQuantity() == 2);
@@ -25,11 +25,11 @@ public class CartTest {
   public void removeItemRemovesItemFromCart() {
     Cart cart = new Cart();
     cart.addItem(
-        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)), 2));
+        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d), 2));
     cart.addItem(
-        new Item(new Product("Apple Pencil2", new Price(Currency.getInstance("USD"), 50)), 3));
+        new Item(new Product("Apple Pencil2", new Price(Currency.getInstance("USD"), 50), 100d), 3));
 
-    cart.remove(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)));
+    cart.remove(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d));
 
     assertTrue(cart.getItems().size() == 1);
   }
@@ -38,11 +38,11 @@ public class CartTest {
   public void removeItemRemovesItemFromCart_addsItToRemovedList() {
     Cart cart = new Cart();
     cart.addItem(
-        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)), 2));
+        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d), 2));
     cart.addItem(
-        new Item(new Product("Apple Pencil2", new Price(Currency.getInstance("USD"), 50)), 3));
+        new Item(new Product("Apple Pencil2", new Price(Currency.getInstance("USD"), 50), 100d), 3));
 
-    cart.remove(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)));
+    cart.remove(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d));
 
     assertTrue(cart.getRemovedItems().size() == 1);
   }
@@ -52,9 +52,9 @@ public class CartTest {
     Cart cart1 = new Cart();
     Cart cart2 = new Cart();
     cart1.addItem(
-        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)), 2));
+        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d), 2));
     cart2.addItem(
-        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)), 2));
+        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d), 2));
 
     assertFalse(cart1.equals(cart2));
     assertTrue(cart1.equals(cart1));
@@ -65,17 +65,30 @@ public class CartTest {
   public void checkoutRetursFlattenedListOfProducts() {
     Cart cart1 = new Cart();
     cart1.addItem(
-        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)), 2));
-    cart1.addItem(new Item(new Product("Apples", new Price(Currency.getInstance("USD"), 50)), 1));
+        new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d), 2));
+    cart1.addItem(new Item(new Product("Apples", new Price(Currency.getInstance("USD"), 50), 100d), 1));
 
     Order actualResult = cart1.checkout();
 
     Order expectedResult =
-        new Order(List.of(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)),
-                new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)),
-                new Product("Apples", new Price(Currency.getInstance("USD"), 50))
+        new Order(List.of(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d),
+                new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d),
+                new Product("Apples", new Price(Currency.getInstance("USD"), 50), 100d)
                 ));
 
     assertTrue(expectedResult.equals(actualResult));
+  }
+
+  @Test
+  public void getShippingCostReturnsTheShippingCost() {
+    Cart cart1 = new Cart();
+    cart1.addItem(
+            new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50), 100d), 2));
+    cart1.addItem(new Item(new Product("Apples", new Price(Currency.getInstance("USD"), 50), 100d), 1));
+
+    Order order = cart1.checkout();
+
+    Shipping shipping = new Shipping(order);
+    assertTrue(shipping.getShippingCost().equals(180d));
   }
 }

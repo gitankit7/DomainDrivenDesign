@@ -5,10 +5,12 @@ import java.util.Objects;
 public final class Product {
   private final String name;
   private final Price price;
+  private final Double weight;
 
-  public Product(String name, Price price) {
+  public Product(String name, Price price, Double weight) {
     this.name = name;
     this.price = price;
+    this.weight = weight;
   }
 
   public String getName() {
@@ -38,4 +40,11 @@ public final class Product {
             "name=" + name + ']';
   }
 
+  public Price getPrice() {
+    return price;
+  }
+
+  public Double getWeight() {
+    return weight;
+  }
 }
