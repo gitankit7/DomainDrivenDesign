@@ -5,6 +5,7 @@ import com.thoughtworks.ddd_workshop.domain.Item;
 import com.thoughtworks.ddd_workshop.domain.Product;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CartTest {
@@ -38,5 +39,18 @@ public class CartTest {
     cart.remove(new Product("Apple Pencil"));
 
     assertTrue(cart.getRemovedItems().size() == 1);
+  }
+
+  @Test
+  public void compareCartsForEquality() {
+    Cart cart1 = new Cart();
+    Cart cart2 = new Cart();
+    cart1.addItem(new Item(new Product("Apple Pencil"), 2));
+    cart2.addItem(new Item(new Product("Apple Pencil"), 2));
+
+
+    assertFalse(cart1.equals(cart2));
+    assertTrue(cart1.equals(cart1));
+    assertTrue(cart2.equals(cart2));
   }
 }

@@ -2,6 +2,7 @@ package com.thoughtworks.ddd_workshop.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static java.util.List.copyOf;
@@ -37,4 +38,17 @@ public class Cart {
     public List<String> getRemovedItems() {
         return copyOf(removedItemsName);
     }
+
+//  @Override
+//  public boolean equals(Object o) {
+//    if (this == o) return true;
+//    if (o == null || getClass() != o.getClass()) return false;
+//    Cart cart = (Cart) o;
+//    return items.equals(cart.items);
+//  }
+//
+//  @Override
+//  public int hashCode() {
+//    return Objects.hash(items);
+//  }
 }
