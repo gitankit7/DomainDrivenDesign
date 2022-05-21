@@ -4,26 +4,19 @@ import java.util.Currency;
 
 public class Price {
     private Currency currency;
-    private double value;
+    private double amount;
 
     public Price(Currency currency, double value) {
         this.currency = currency;
-        this.value = value;
+        this.amount = value;
     }
 
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
+    public double getAmount() {
+        return amount;
     }
 
     public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
 }

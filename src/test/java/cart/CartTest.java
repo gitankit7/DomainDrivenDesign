@@ -16,7 +16,7 @@ public class CartTest {
   @Test
   public void noItemInTheCart_ItemGetsAddedToCartWhenAddToCartIsCalled() {
     Cart cart = new Cart();
-    cart.addItem(new Item(new Product("Apple Pencil", new Price(Currency.getInstance("USD"), 50)), 2));
+    cart.addItem(new Item(new Product("Apple Pencil", Cart::discountedPrice("Apple Pencil")), 2));
 
     assertTrue(cart.getItems().size() == 1);
     assertTrue(cart.getItems().get(0).getQuantity() == 2);
