@@ -2,7 +2,12 @@ package com.thoughtworks.ddd_workshop.domain;
 
 import java.util.Objects;
 
-public record Product(String name) {
+public final class Product {
+  private final String name;
+
+  public Product(String name) {
+    this.name = name;
+  }
 
   public String getName() {
     return name;
@@ -20,4 +25,15 @@ public record Product(String name) {
   public int hashCode() {
     return Objects.hash(name);
   }
+
+  public String name() {
+    return name;
+  }
+
+  @Override
+  public String toString() {
+    return "Product[" +
+            "name=" + name + ']';
+  }
+
 }
